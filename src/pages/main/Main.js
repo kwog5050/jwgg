@@ -105,34 +105,33 @@ const Main = ({ userProfile }) => {
                 </Style.Profile>
                 <Style.scoreList >
                     {
-                        scoreList.length < 0
-                            ? <Loading />
-                            : scoreList?.map((list, i) => {
-                                return (<li key={i} className={victoryCheck(list)}>
-                                    <div className="gameInfo">
-                                        <div>
-                                            <h3>{victoryCheck(list) === "win" ? "승리" : "패배"}</h3>
-                                            <h4>{timestampFormat(list.info.gameEndTimestamp, "yymmddhh")}</h4>
-                                        </div>
-                                        <h5>{playTime(timestampFormat(list.info.gameStartTimestamp, "hh"), timestampFormat(list.info.gameEndTimestamp, "hh"))}</h5>
+                        scoreList?.length > 0 &&
+                        scoreList?.map((list, i) => {
+                            return (<li key={i} className={victoryCheck(list)}>
+                                <div className="gameInfo">
+                                    <div>
+                                        <h3>{victoryCheck(list) === "win" ? "승리" : "패배"}</h3>
+                                        <h4>{timestampFormat(list.info.gameEndTimestamp, "yymmddhh")}</h4>
                                     </div>
-                                    <div className="champingImage">
-                                        <img className='' src={`https://ddragon.leagueoflegends.com/cdn/13.24.1/img/champion/${getPlayInfo(list).championName}.png`} alt="" />
+                                    <h5>{playTime(timestampFormat(list.info.gameStartTimestamp, "hh"), timestampFormat(list.info.gameEndTimestamp, "hh"))}</h5>
+                                </div>
+                                <div className="champingImage">
+                                    <img className='' src={`https://ddragon.leagueoflegends.com/cdn/13.24.1/img/champion/${getPlayInfo(list)?.championName}.png`} alt="" />
+                                </div>
+                                <div className="detailInfo">
+                                    <h5>{getPlayInfo(list)?.kills} / <div className="red"> {getPlayInfo(list)?.deaths} </div> / {getPlayInfo(list)?.assists}</h5>
+                                    <h6>cs {getPlayInfo(list)?.cs}</h6>
+                                    <div className='itemList'>
+                                        {getPlayInfo(list)?.item0 !== 0 && <img src={`https://ddragon.leagueoflegends.com/cdn/13.24.1/img/item/${getPlayInfo(list)?.item0}.png`} alt="" />}
+                                        {getPlayInfo(list)?.item1 !== 0 && <img src={`https://ddragon.leagueoflegends.com/cdn/13.24.1/img/item/${getPlayInfo(list)?.item1}.png`} alt="" />}
+                                        {getPlayInfo(list)?.item2 !== 0 && <img src={`https://ddragon.leagueoflegends.com/cdn/13.24.1/img/item/${getPlayInfo(list)?.item2}.png`} alt="" />}
+                                        {getPlayInfo(list)?.item3 !== 0 && <img src={`https://ddragon.leagueoflegends.com/cdn/13.24.1/img/item/${getPlayInfo(list)?.item3}.png`} alt="" />}
+                                        {getPlayInfo(list)?.item4 !== 0 && <img src={`https://ddragon.leagueoflegends.com/cdn/13.24.1/img/item/${getPlayInfo(list)?.item4}.png`} alt="" />}
+                                        {getPlayInfo(list)?.item5 !== 0 && <img src={`https://ddragon.leagueoflegends.com/cdn/13.24.1/img/item/${getPlayInfo(list)?.item5}.png`} alt="" />}
+                                        {getPlayInfo(list)?.item6 !== 0 && <img src={`https://ddragon.leagueoflegends.com/cdn/13.24.1/img/item/${getPlayInfo(list)?.item6}.png`} alt="" />}
                                     </div>
-                                    <div className="detailInfo">
-                                        <h5>{getPlayInfo(list).kills} / <div className="red"> {getPlayInfo(list).deaths} </div> / {getPlayInfo(list).assists}</h5>
-                                        <h6>cs {getPlayInfo(list).cs}</h6>
-                                        <div className='itemList'>
-                                            {getPlayInfo(list).item0 !== 0 && <img src={`https://ddragon.leagueoflegends.com/cdn/13.24.1/img/item/${getPlayInfo(list).item0}.png`} alt="" />}
-                                            {getPlayInfo(list).item1 !== 0 && <img src={`https://ddragon.leagueoflegends.com/cdn/13.24.1/img/item/${getPlayInfo(list).item1}.png`} alt="" />}
-                                            {getPlayInfo(list).item2 !== 0 && <img src={`https://ddragon.leagueoflegends.com/cdn/13.24.1/img/item/${getPlayInfo(list).item2}.png`} alt="" />}
-                                            {getPlayInfo(list).item3 !== 0 && <img src={`https://ddragon.leagueoflegends.com/cdn/13.24.1/img/item/${getPlayInfo(list).item3}.png`} alt="" />}
-                                            {getPlayInfo(list).item4 !== 0 && <img src={`https://ddragon.leagueoflegends.com/cdn/13.24.1/img/item/${getPlayInfo(list).item4}.png`} alt="" />}
-                                            {getPlayInfo(list).item5 !== 0 && <img src={`https://ddragon.leagueoflegends.com/cdn/13.24.1/img/item/${getPlayInfo(list).item5}.png`} alt="" />}
-                                            {getPlayInfo(list).item6 !== 0 && <img src={`https://ddragon.leagueoflegends.com/cdn/13.24.1/img/item/${getPlayInfo(list).item6}.png`} alt="" />}
-                                        </div>
-                                    </div>
-                                    {/* {
+                                </div>
+                                {/* {
                                     list.info.participants.map((userInfo, j) => {
                                         return (
                                             <div key={j}>
@@ -145,8 +144,8 @@ const Main = ({ userProfile }) => {
                                         )
                                     })
                                 } */}
-                                </li>)
-                            })
+                            </li>)
+                        })
                     }
                 </Style.scoreList>
             </div>
