@@ -29,8 +29,24 @@ export const Profile = styled.div`
 export const scoreList = styled.ul`
     li{
         display: flex;
-        flex-direction: column;
+        gap: 15px;
         margin: 10px 0px;
+        padding: 15px;
+        border-radius: 15px;
+        .gameInfo{
+            display: flex;
+            justify-content: space-between;
+            flex-direction: column;
+            padding-right: 15px;
+            > div{
+                h3{
+                    font-size: 20px;
+                }
+                h4{
+                    line-height: 1.5;
+                }
+            }
+        }
         .champingImage{
             width: 80px;
             height: 80px;
@@ -46,11 +62,41 @@ export const scoreList = styled.ul`
                 transform: translate(-50%,-50%);
             }
         }
+        .detailInfo{
+            display: flex;
+            flex-direction: column;
+            border-left: 1px solid #ddd;
+            padding: 0px 15px;
+            h5{
+                display: flex;
+                font-size: 18px;
+                font-weight:bold;
+                .red{
+                    font-size: 18px;
+                    font-weight: bold;
+                    color: red;
+                    padding: 0px 3px;
+                }
+            }
+            h6{
+                font-size: 18px;
+                line-height: 1.5;
+            }
+            .itemList{
+                display: flex;
+                gap: 2px;
+                img{
+                    width: 30px;
+                    height: 30px;
+                    border-radius: 5px;
+                }
+            }
+        }
     }
     .win{
-        background-color: #5383e8ad;
+        background-color: #0052ff52;
     }
     .lose{
-        background-color: #e84057ad;
+        background-color: #ff002347;
     }
 `
