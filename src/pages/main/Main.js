@@ -64,7 +64,6 @@ const Main = ({ userProfile, more, setMore }) => {
 
     // 게임 플레이시간 계산
     const playTime = (startTime, endTime) => {
-        // 주어진 형식의 시간 문자열을 파싱하는 함수
         const parseTimeString = (timeString) => {
             const [year, month, day, hour, minute, second] = timeString.split(/[년월일시분초 ]+/).filter(Boolean).map(Number);
             return new Date(year, month - 1, day, hour, minute, second);
