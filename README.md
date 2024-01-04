@@ -15,5 +15,5 @@ npm istall axios@1.6.3
 ## 주요기능
 
 <p>
-  <img src="https://github.com/kwog5050/jwgg/assets/92096968/38069400-56e1-4de2-84b6-3a3b3833fd5f" alt="CPT2401012339-1455x960" width="700" height="500">
+  <img src="https://github.com/kwog5050/jwgg/assets/92096968/38069400-56e1-4de2-84b6-3a3b3833fd5f" alt="CPT2401012339-1455x960" width="650" height="500">
 </p>
