@@ -8,7 +8,7 @@ import Loading from 'components/loading/Loading.js';
 
 import * as Style from './style.js';
 
-const Main = ({ userProfile }) => {
+const Main = ({ userProfile, more, setMore }) => {
     const [scoreList, setScoreList] = useState([]);
 
     // 승패 확인
@@ -64,23 +64,21 @@ const Main = ({ userProfile }) => {
 
     // 게임 플레이시간 계산
     const playTime = (startTime, endTime) => {
-        const startDate = parseTimeString(startTime);
-        const endDate = parseTimeString(endTime);
+        // 주어진 형식의 시간 문자열을 파싱하는 함수
+        const parseTimeString = (timeString) => {
+            const [year, month, day, hour, minute, second] = timeString.split(/[년월일시분초 ]+/).filter(Boolean).map(Number);
+            return new Date(year, month - 1, day, hour, minute, second);
+        };
 
-        const timeDifference = endDate - startDate;
+        const date1 = parseTimeString(startTime);
+        const date2 = parseTimeString(endTime);
+
+        const timeDifference = date2 - date1;
 
         const minutes = Math.floor(timeDifference / (1000 * 60));
         const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
 
         return `${minutes}분 ${seconds}초`;
-    };
-
-    // 시간 문자열을 Date 객체로 변환하는 함수
-    const parseTimeString = (timeString) => {
-        const [, hours, minutes, seconds] = timeString.match(/(\d+)시 (\d+)분 (\d+)초/).map(Number);
-        const date = new Date();
-        date.setHours(hours, minutes, seconds, 0);
-        return date;
     };
 
     const getUserGameScoreList = (count) => {
@@ -89,8 +87,8 @@ const Main = ({ userProfile }) => {
     }
 
     useEffect(() => {
-        getUserGameScoreList(5);
-    }, [userProfile]);
+        getUserGameScoreList(more);
+    }, [userProfile, more]);
 
     return (
         <>
@@ -103,35 +101,38 @@ const Main = ({ userProfile }) => {
                         <h4>마지막접속일 : {timestampFormat(userProfile?.revisionDate, "yymmddhh")}</h4>
                     </div>
                 </Style.Profile>
-                <Style.scoreList >
-                    {
-                        scoreList?.length > 0 &&
-                        scoreList?.map((list, i) => {
-                            return (<li key={i} className={victoryCheck(list)}>
-                                <div className="gameInfo">
-                                    <div>
-                                        <h3>{victoryCheck(list) === "win" ? "승리" : "패배"}</h3>
-                                        <h4>{timestampFormat(list.info.gameEndTimestamp, "yymmddhh")}</h4>
-                                    </div>
-                                    <h5>{playTime(timestampFormat(list.info.gameStartTimestamp, "hh"), timestampFormat(list.info.gameEndTimestamp, "hh"))}</h5>
-                                </div>
-                                <div className="champingImage">
-                                    <img className='' src={`https://ddragon.leagueoflegends.com/cdn/13.24.1/img/champion/${getPlayInfo(list)?.championName}.png`} alt="" />
-                                </div>
-                                <div className="detailInfo">
-                                    <h5>{getPlayInfo(list)?.kills} / <div className="red"> {getPlayInfo(list)?.deaths} </div> / {getPlayInfo(list)?.assists}</h5>
-                                    <h6>cs {getPlayInfo(list)?.cs}</h6>
-                                    <div className='itemList'>
-                                        {getPlayInfo(list)?.item0 !== 0 && <img src={`https://ddragon.leagueoflegends.com/cdn/13.24.1/img/item/${getPlayInfo(list)?.item0}.png`} alt="" />}
-                                        {getPlayInfo(list)?.item1 !== 0 && <img src={`https://ddragon.leagueoflegends.com/cdn/13.24.1/img/item/${getPlayInfo(list)?.item1}.png`} alt="" />}
-                                        {getPlayInfo(list)?.item2 !== 0 && <img src={`https://ddragon.leagueoflegends.com/cdn/13.24.1/img/item/${getPlayInfo(list)?.item2}.png`} alt="" />}
-                                        {getPlayInfo(list)?.item3 !== 0 && <img src={`https://ddragon.leagueoflegends.com/cdn/13.24.1/img/item/${getPlayInfo(list)?.item3}.png`} alt="" />}
-                                        {getPlayInfo(list)?.item4 !== 0 && <img src={`https://ddragon.leagueoflegends.com/cdn/13.24.1/img/item/${getPlayInfo(list)?.item4}.png`} alt="" />}
-                                        {getPlayInfo(list)?.item5 !== 0 && <img src={`https://ddragon.leagueoflegends.com/cdn/13.24.1/img/item/${getPlayInfo(list)?.item5}.png`} alt="" />}
-                                        {getPlayInfo(list)?.item6 !== 0 && <img src={`https://ddragon.leagueoflegends.com/cdn/13.24.1/img/item/${getPlayInfo(list)?.item6}.png`} alt="" />}
-                                    </div>
-                                </div>
-                                {/* {
+                {
+                    scoreList?.length <= 0
+                        ? <Loading></Loading>
+                        : <>
+                            <Style.scoreList >
+                                {
+                                    scoreList?.map((list, i) => {
+                                        return (<li key={i} className={victoryCheck(list)}>
+                                            <div className="gameInfo">
+                                                <div>
+                                                    <h3>{victoryCheck(list) === "win" ? "승리" : "패배"}</h3>
+                                                    <h4>{timestampFormat(list.info.gameEndTimestamp, "yymmddhh")}</h4>
+                                                </div>
+                                                <h5>{playTime(timestampFormat(list.info.gameStartTimestamp, "hh"), timestampFormat(list.info.gameEndTimestamp, "hh"))}</h5>
+                                            </div>
+                                            <div className="champingImage">
+                                                <img className='' src={`https://ddragon.leagueoflegends.com/cdn/13.24.1/img/champion/${getPlayInfo(list)?.championName}.png`} alt="" />
+                                            </div>
+                                            <div className="detailInfo">
+                                                <h5>{getPlayInfo(list)?.kills} / <div className="red"> {getPlayInfo(list)?.deaths} </div> / {getPlayInfo(list)?.assists}</h5>
+                                                <h6>cs {getPlayInfo(list)?.cs}</h6>
+                                                <div className='itemList'>
+                                                    {getPlayInfo(list)?.item0 !== 0 && <img src={`https://ddragon.leagueoflegends.com/cdn/13.24.1/img/item/${getPlayInfo(list)?.item0}.png`} alt="" />}
+                                                    {getPlayInfo(list)?.item1 !== 0 && <img src={`https://ddragon.leagueoflegends.com/cdn/13.24.1/img/item/${getPlayInfo(list)?.item1}.png`} alt="" />}
+                                                    {getPlayInfo(list)?.item2 !== 0 && <img src={`https://ddragon.leagueoflegends.com/cdn/13.24.1/img/item/${getPlayInfo(list)?.item2}.png`} alt="" />}
+                                                    {getPlayInfo(list)?.item3 !== 0 && <img src={`https://ddragon.leagueoflegends.com/cdn/13.24.1/img/item/${getPlayInfo(list)?.item3}.png`} alt="" />}
+                                                    {getPlayInfo(list)?.item4 !== 0 && <img src={`https://ddragon.leagueoflegends.com/cdn/13.24.1/img/item/${getPlayInfo(list)?.item4}.png`} alt="" />}
+                                                    {getPlayInfo(list)?.item5 !== 0 && <img src={`https://ddragon.leagueoflegends.com/cdn/13.24.1/img/item/${getPlayInfo(list)?.item5}.png`} alt="" />}
+                                                    {getPlayInfo(list)?.item6 !== 0 && <img src={`https://ddragon.leagueoflegends.com/cdn/13.24.1/img/item/${getPlayInfo(list)?.item6}.png`} alt="" />}
+                                                </div>
+                                            </div>
+                                            {/* {
                                     list.info.participants.map((userInfo, j) => {
                                         return (
                                             <div key={j}>
@@ -144,10 +145,16 @@ const Main = ({ userProfile }) => {
                                         )
                                     })
                                 } */}
-                            </li>)
-                        })
-                    }
-                </Style.scoreList>
+                                        </li>)
+                                    })
+                                }
+                            </Style.scoreList>
+                            <Style.More onClick={() => { setMore(more + 5) }}>
+                                <i className="fa-solid fa-plus"></i>
+                            </Style.More>
+                        </>
+                }
+
             </div>
         </>
     );

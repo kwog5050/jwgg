@@ -1,39 +1,37 @@
 import styled from "styled-components";
 
-export const Header = styled.div`
-    padding: 15px 0px;
-    background-color: #caa9ff;
-    position: fixed;
-    top: 0;
-    left: 0;
+export const Search = styled.div`
     width: 100%;
-    z-index: 101;
-    h1{
-        font-family: 'DNFBitBitv2';
-        font-size: 24px;
-        color: #fff;
-        cursor: pointer;
-    }
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     .searchBox{
         position: relative;
         input{
-            width: 250px;
-            line-height: 40px;
+            width: 500px;
+            line-height: 60px;
             border: 1px solid #aaa;
-            padding: 0px 5px;
+            padding: 0px 10px;
+            border-radius: 10px;
+            font-size: 20px;
         }
         button{
             position: absolute;
             top: 50%;
             right: 1px;
             transform: translateY(-50%);
-            width: 38px;
-            height: 38px;
+            width: 58px;
+            height: 58px;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             background-color: #fff;
+            border-radius: 10px;
+            i{
+                font-size: 20px;
+            }
         }
     }
 `

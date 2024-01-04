@@ -3,10 +3,11 @@ import React, { useState } from 'react';
 import * as Stlye from './style.js';
 import { getUserProfile } from 'apis/riotApi/user.js';
 
-const Header = ({ setUserProfile }) => {
+const Header = ({ setUserProfile, setMore }) => {
     const [summonerName, setSummonerName] = useState('');
 
     const searchUser = () => {
+        setMore(5);
         getUserProfile(summonerName, setUserProfile);
     }
 
@@ -24,10 +25,10 @@ const Header = ({ setUserProfile }) => {
         <Stlye.Header>
             <div className="wrap">
                 <div className="flexBox">
-                    <h1>JWGG</h1>
+                    <h1 onClick={() => { setUserProfile(null) }}>JWGG</h1>
 
                     <div className="searchBox">
-                        <input type="text" name='summonerName' placeholder='소환사명을 입려해주세요' onChange={onChange} onKeyPress={onKeyPress} />
+                        <input type="text" name='summonerName' placeholder='소환사명을 입력해주세요' onChange={onChange} onKeyPress={onKeyPress} />
                         <button onClick={searchUser}><i className="fa-solid fa-magnifying-glass"></i></button>
                     </div>
                 </div>

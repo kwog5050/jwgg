@@ -10,13 +10,13 @@ const Loading = () => {
             setLoading(0);
         }
         if (loading === 0) {
-            return '로딩중입니다';
+            return '검색중입니다';
         } else if (loading === 1) {
-            return '로딩중입니다.';
+            return '검색중입니다.';
         } else if (loading === 2) {
-            return '로딩중입니다..';
+            return '검색중입니다..';
         } else if (loading === 3) {
-            return '로딩중입니다...';
+            return '검색중입니다...';
         }
     };
 
@@ -34,7 +34,7 @@ const Loading = () => {
         <Style.Div>
             <i className="fa-solid fa-spinner"></i>
             <p>
-                {text()} <br /> 잠시만 기다려주세요
+                {text()}
             </p>
         </Style.Div>
     );

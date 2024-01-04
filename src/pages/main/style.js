@@ -4,6 +4,7 @@ export const Profile = styled.div`
     padding: 30px 0px;
     display: flex;
     gap: 20px;
+    margin-top: 70px;
     img{
         width: 100px;
         height: 100px;
@@ -98,5 +99,18 @@ export const scoreList = styled.ul`
     }
     .lose{
         background-color: #ff002347;
+    }
+`
+
+export const More = styled.div`
+    width: 100%;
+    background-color: #ddd;
+    text-align: center;
+    padding: 10px 0px;
+    border-radius: 15px;
+    cursor: pointer;
+    i{
+        line-height: 40px;
+        font-size: 30px;
     }
 `

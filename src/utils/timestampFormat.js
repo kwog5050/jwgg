@@ -18,7 +18,7 @@ export const timestampFormat = (timestamp, type) => {
     if (type === "yymmddhh") {
         return `${year}년 ${month}월 ${day}일 ${hours}시 ${minutes}분`;
     } else if (type === "hh") {
-        return `${hours}시 ${minutes}분 ${seconds}초`;
+        return `${year}년 ${month}월 ${day}일 ${hours}시 ${minutes}분 ${seconds}초`;
     }
 
 }
